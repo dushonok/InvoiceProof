@@ -41,7 +41,7 @@ def add_invoices_to_tasks(invoice_title, start, end):
         task_due_date = get_page_property(task, "Due")
         callback(f"Processing task {i+1}/{len(tasks)}: '{task_title}', due on {task_due_date}.")
         # Create a payment entry for the task
-        invoice = add_payment_for_task(task_id, f"{invoice_title}-{i+1}", status_callback=callback, test=True)
+        invoice = add_payment_for_task(task_id, f"{invoice_title}-{i+1}", status_callback=callback, test=False)
     
     callback(f"Added invoices to {len(tasks)} tasks.")
 
