@@ -53,6 +53,12 @@ def get_tasks_for_period(start_date, end_date, person, status_callback=None):
             {
                 "property": "Assigned To",
                 "people": {"contains": person}
+            },
+            {
+                "property": "Payment",
+                "relation": {
+                    "is_empty": True
+                }
             }
         ]
     }
