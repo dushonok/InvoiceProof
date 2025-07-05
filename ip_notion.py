@@ -7,6 +7,7 @@ from na_settings import (
     PAYMENTS_PER_TASK_DB_ID,
     INVOICE_NUMBER_PROP,
     NOTION_DATE_TIME_FORMAT,
+    VA_ASMAT_ID,
 )
 from notion_api import (
     get_db_entries,
@@ -18,7 +19,7 @@ from datetime import datetime
 DATE_PARSING_FORMAT = "%m-%d-%Y"
 
 
-def get_tasks_for_period(start_date, end_date, status_callback=None):
+def get_tasks_for_period(start_date, end_date, person, status_callback=None):
     """
     Fetches tasks from Notion for a given date range.
     
@@ -38,8 +39,7 @@ def get_tasks_for_period(start_date, end_date, status_callback=None):
 
     start_txt = datetime.strptime(start_date, DATE_PARSING_FORMAT).strftime(NOTION_DATE_TIME_FORMAT)
     end_txt = datetime.strptime(end_date, DATE_PARSING_FORMAT).strftime(NOTION_DATE_TIME_FORMAT)
-    print(f"Fetching tasks from {start_date} to {end_date}... Type of start_date: {type(start_date)}, end_date: {type(end_date)}")
-    print(f"Converted start_txt: {start_txt}, end_txt: {end_txt}")
+    
     filter = {
         "and": [
             {
@@ -49,6 +49,10 @@ def get_tasks_for_period(start_date, end_date, status_callback=None):
             {
                 "property": "Due",
                 "date": {"on_or_after": end_txt}
+            },
+            {
+                "property": "Assigned To",
+                "people": {"contains": person}
             }
         ]
     }

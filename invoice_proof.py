@@ -1,26 +1,33 @@
 import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'NotionAutomator')))
+from na_settings import (
+    VA_ASMAT_ID,
+)
 import argparse
 from datetime import datetime
 from ip_notion import *
 
         
-def callback(message):
+def callback(messsage):
     """
     Callback function to print status messages.
     """
     print(message)
 
 def add_invoices_to_tasks(invoice_title, start, end):
-    
-    #TODO: Add a param for the person the task is assigned to.
 
-    callback(f"Adding invoices to tasks from {start} to {end}.")
+    #TODO: Eventually, add a param for the person the task is assigned to.
 
-    tasks = get_tasks_for_period(start.strftime(DATE_PARSING_FORMAT), end.strftime(DATE_PARSING_FORMAT), status_callback=callback)
+    person = VA_ASMAT_ID  # Assuming VA_ASMAT_ID is the ID of the person to whom tasks are assigned
+    start_txt = start.strftime(DATE_PARSING_FORMAT)
+    end_txt = end.strftime(DATE_PARSING_FORMAT)
+    callback(f"Adding invoices to tasks from {start_txt} to {end_txt} for person with ID {person}...")
+
+    tasks = get_tasks_for_period(start_txt, end_txt, person, status_callback=callback)
     if not tasks:
         callback("No tasks found for the specified date range.")
         return
-    callback(f"Found {len(tasks)} tasks to process.")
     for i, task in enumerate(tasks):
         task_id = task.get("id")
         if not task_id:
@@ -28,9 +35,9 @@ def add_invoices_to_tasks(invoice_title, start, end):
             continue
         
         # Create a payment entry for the task
-        invoice = add_payment_for_task(task_id, f"{invoice_title}-{i}", status_callback=callback, test=True)
+        invoice = add_payment_for_task(task_id, f"{invoice_title}-{i+1}", status_callback=callback, test=True)
     
-    callback(f"Added all invoices for {len(tasks)} tasks.")
+    callback(f"Added invoices to {len(tasks)} tasks.")
 
 def valid_date(date_str):
     """
