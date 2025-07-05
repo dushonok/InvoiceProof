@@ -20,6 +20,9 @@ def callback(message):
 
 def add_invoices_to_tasks(invoice_title, start, end):
 
+    #TODO: ADD PAGINATION SUPPORT TO TASK pagination - or add a filter to show only tasks w/o invoices and run it multiple times!!!
+    #TODO: Add '# of items' equals 1 in the invoice creation
+
     #TODO: Eventually, add a param for the person the task is assigned to.
 
     person = VA_ASMAT_ID  # Assuming VA_ASMAT_ID is the ID of the person to whom tasks are assigned
