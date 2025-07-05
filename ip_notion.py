@@ -44,11 +44,11 @@ def get_tasks_for_period(start_date, end_date, person, status_callback=None):
         "and": [
             {
                 "property": "Due",
-                "date": {"on_or_before": start_txt}
+                "date": {"on_or_after": start_txt}
             },
             {
                 "property": "Due",
-                "date": {"on_or_after": end_txt}
+                "date": {"on_or_before": end_txt}
             },
             {
                 "property": "Assigned To",

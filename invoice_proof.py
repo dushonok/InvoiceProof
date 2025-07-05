@@ -4,6 +4,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'N
 from na_settings import (
     VA_ASMAT_ID,
 )
+from notion_api import (
+    get_page_property,
+)
 import argparse
 from datetime import datetime
 from ip_notion import *
@@ -34,6 +37,9 @@ def add_invoices_to_tasks(invoice_title, start, end):
             callback(f"Task {task} does not have a valid ID.")
             continue
         
+        task_title = get_page_property(task, "Subtask")
+        task_due_date = get_page_property(task, "Due")
+        callback(f"Processing task {i+1}/{len(tasks)}: '{task_title}', due on {task_due_date}.")
         # Create a payment entry for the task
         invoice = add_payment_for_task(task_id, f"{invoice_title}-{i+1}", status_callback=callback, test=True)
     
