@@ -9,7 +9,7 @@ from datetime import datetime
 from ip_notion import *
 
         
-def callback(messsage):
+def callback(message):
     """
     Callback function to print status messages.
     """
