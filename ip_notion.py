@@ -10,7 +10,7 @@ from na_settings import (
     VA_ASMAT_ID,
 )
 from notion_api import (
-    get_db_entries,
+    sync_get_db_entries,
     create_page,
     get_page_id,
 )
@@ -62,7 +62,7 @@ def get_tasks_for_period(start_date, end_date, person, status_callback=None):
             }
         ]
     }
-    tasks = get_db_entries(TASKS_SUBTASKS_DB_ID, filter)
+    tasks = sync_get_db_entries(TASKS_SUBTASKS_DB_ID, filter)
     
     if status_callback:
         status_callback(f"Found {len(tasks)} tasks.")
