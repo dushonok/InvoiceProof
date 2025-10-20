@@ -11,7 +11,7 @@ from na_settings import (
 )
 from notion_api import (
     sync_get_db_entries,
-    create_page,
+    sync_create_page,
     get_page_id,
 )
 from datetime import datetime
@@ -107,7 +107,7 @@ def add_payment_for_task(task_id, invoice_title, status_callback=None, test=Fals
         invoice_id = "test_invoice_id"
         invoice = properties
     else:
-        invoice = create_page(PAYMENTS_PER_TASK_DB_ID, properties)
+        invoice = sync_create_page(PAYMENTS_PER_TASK_DB_ID, properties)
         if not invoice:
             raise Exception("Failed to create invoice record in Notion.")
         invoice_id = get_page_id(invoice)
