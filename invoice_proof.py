@@ -67,17 +67,17 @@ if __name__ == "__main__":
         epilog="Example: python script.py 'May Invoice' 01-01-2024 01-31-2024"
     )
     parser.add_argument(
-        "invoice_title",
+        "--invoice_title",
         type=str,
         help="Invoice title (e.g., 'May Invoice')"
     )
     parser.add_argument(
-        "start",
+        "--start",
         type=valid_date,
         help="Start date in mm-dd-yyyy format (e.g., 01-01-2024)"
     )
     parser.add_argument(
-        "end",
+        "--end",
         type=valid_date,
         help="End date in mm-dd-yyyy format (e.g., 01-31-2024)"
     )
